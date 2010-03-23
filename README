@@ -2,10 +2,10 @@
 
 This project was created in order to scrape data for a research project on consultants and entrepreneurship rates.
 
-The code present in this project can be used to scrape search result data from linked in, so I figured the code might be
-helpful to those wanting to use scRUBYt (http://scrubyt.org/). 
+The code present in this project can be used to scrape search result data from linked in, so I figured the code might be helpful to those wanting to use scRUBYt (http://scrubyt.org/). 
 
 All scRUBYt code can be found in the Linkedin class.
 
-The LinkedinScraper class consists of helpers that access the Linkedin class in order to store the data locally in XML files
-and read the stored XML data into the database. 
+The LinkedinScraper class consists of helpers that access the Linkedin class in order to store the data locally in XML files and read the stored XML data into the database. 
+
+NOTE: using this code to scrape Linkedin is technically a violation of their terms
