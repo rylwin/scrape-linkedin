@@ -1,0 +1,51 @@
+<p>
+  <b>Name:</b>
+  <%=h @person.to_s %>
+</p>
+
+<p>
+	<b>Entrepreneur?:</b>
+	<%= @person.entrepreneur %>
+	<% form_for @person do |f| %>
+		<p>
+	    <%= f.label :entrepreneur %><br />
+	    <%= f.select :entrepreneur, Person::ENTREPRENEUR %>
+		</p>
+		<p>
+	    <%= f.label :notes %><br />
+	    <%= f.text_area :notes, :size => '50x5' %>
+		</p>
+		<p>
+	    <%= f.submit 'Update' %>
+	  </p>
+	<% end %>
+</p>
+<p>
+	<b>Firm:</b>
+	<%= @person.consulting_firm.to_s.titleize %>
+</p>
+
+<p>
+	<b>Current Job:</b>
+	<%= @person.current_job %> 
+	(<%= link_to "Google", "http://google.com/search?q=#{@person.current_job}", :target => :top %>, <%= link_to 'Wiki', "http://en.wikipedia.org/w/index.php?title=Special:Search&search=#{@person.current_job}&fulltext=Search", :target => :top %>)
+</p>
+
+<p>
+	<b>Past Jobs:</b>
+	<%= @person.past_jobs %>
+</p>
+
+<p>
+  <b>Profile Url:</b>
+  <%= link_to h(@person.profile_url), link_to_profile(@person), :target => :top %>
+</p>
+
+<p>
+	<b>School:</b>
+	<%= @person.school %>
+</p>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

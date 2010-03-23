@@ -1,0 +1,118 @@
+<h1>Counts</h1>
+
+<table>
+	<tr>
+		<th></th>
+		<th>Bain</th>
+		<th>McKinsey</th>
+		<th>BCG</th>
+	</tr>
+	<% Person::ENTREPRENEUR.each do |category| %>
+		<tr>
+			<th><%= category.to_s.titleize %></th>
+			<% Person::CONSULTING_FIRM.each do |firm| %>
+				<td><%= Person.firm(firm).category(category).count %></td>
+			<% end %>
+		</tr>
+	<% end %>
+	<tr>
+		<th>Uncategorized</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= Person.firm(firm).category(nil).count %></td>
+		<% end %>
+	</tr>
+	<tr class="total">
+		<th>Total</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= Person.firm(firm).count %></td>
+		<% end %>
+	</tr>
+</table>
+
+<h2>Condensed Count</h2>
+<table>
+	<tr>
+		<th></th>
+		<th>Bain</th>
+		<th>McKinsey</th>
+		<th>BCG</th>
+		<th>Total</th>
+	</tr>
+	<tr>
+		<th>Entr</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= Person.firm(firm).category(:yes).count %></td>
+		<% end %>
+		<td><%= Person.category(:yes).count %></td>
+	</tr>
+	<tr>
+		<th>Not</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= Person.firm(firm).category(:no).count %></td>
+		<% end %>
+		<td><%= Person.category(:no).count %></td>
+	</tr>
+	<tr class="total">
+		<th>Total</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= total(firm).to_i %></td>
+		<% end %>
+		<th><%= total.to_i %></th>
+	</tr>
+</table>
+
+<h1>Probabilities</h1>
+
+<table>
+	<tr>
+		<th></th>
+		<th>Bain</th>
+		<th>McKinsey</th>
+		<th>BCG</th>
+	</tr>
+	<tr>
+		<th>Entrepreneur</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= number_to_percentage yes_percent(firm)*100 %></td>
+		<% end %>
+	</tr>
+	<tr>
+		<th>Not</th>
+		<% Person::CONSULTING_FIRM.each do |firm| %>
+			<td><%= number_to_percentage no_percent(firm)*100 %></td>
+		<% end %>
+	</tr>
+</table>
+
+<h2>Significance Tests</h2>
+<p>
+	<b>2-PropZTest: Bain (68/179) > McKinsey (48/218)</b>:
+	p-val = 2.492E-4
+</p>
+<p>
+	<b>2-PropZTest: Bain (68/179) neq McKinsey (48/218)</b>:
+	p-val = 4.9842E-4
+</p>
+<p>
+	<b>2-PropZTest: Bain (68/179) > BCG (53/219)</b>:
+	p-val = .001466
+</p>
+<p>
+	<b>2-PropZTest: Bain (68/179) neq BCG (53/219)</b>:
+	p-val = .002932
+</p>
+<p>
+	<b>2-PropZTest: McKinsey (48/218) vs. BCG (53/219)</b>:
+	p-val = .7058
+</p>
+
+
+<h2>Bayes Probabilities</h2>
+<%= image_tag 'bayes.png' %>
+<%= image_tag 'prob_a_and_b.png' %>
+
+<% Person::CONSULTING_FIRM.each do |firm| %>
+	<p>
+		<b>P(Entr|<%= firm %>)</b> = <%= number_to_percentage bayes(firm)*100 %>
+	</p>
+<% end %>
